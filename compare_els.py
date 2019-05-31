@@ -8,8 +8,8 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-sample1', type=str, default=None, help='raw file with angles data 1')
 parser.add_argument('-sample2', type=str, default=None, help='raw file with abgles data 2')
-parser.add_argument('-coord1', type=str, default=None, help='coords from sample 1 in format "leftcoord:rightcoord"')
-parser.add_argument('-coord2', type=str, default=None, help='coords from sample 2 in format "leftcoord:rightcoord"')
+parser.add_argument('-coord1', type=str, default=None, help='coords from sample 1 formatted as "leftcoord:rightcoord"')
+parser.add_argument('-coord2', type=str, default=None, help='coords from sample 2 formatted as "leftcoord:rightcoord"')
 
 args = parser.parse_args()
 
@@ -19,8 +19,8 @@ if None in (args.sample1, args.sample2, args.coord1, args.coord2):
 
 else:
 
-    Sample1 = pd.read_csv(args.sample1, sep='\t', skiprows=3, header=None, names=[str(i) for i in range(17)])
-    Sample2 = pd.read_csv(args.sample2, sep='\t', skiprows=3, header=None, names=[str(i) for i in range(17)])
+    Sample1 = pd.read_csv(args.sample1, sep='\t', skiprows=3, header=None, names=[str(i) for i in range(17)], engine='python')
+    Sample2 = pd.read_csv(args.sample2, sep='\t', skiprows=3, header=None, names=[str(i) for i in range(17)], engine='python')
 
 
     l1, r1 = args.coord1.split(':')
