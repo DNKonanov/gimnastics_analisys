@@ -8,8 +8,9 @@ import argparse
 parser = argparse.ArgumentParser()
 parser.add_argument('-sample1', type=str, default=None, help='raw file with angles data 1')
 parser.add_argument('-sample2', type=str, default=None, help='raw file with abgles data 2')
-parser.add_argument('-coord1', type=str, default=None, help='coords from sample 1 formatted as "leftcoord:rightcoord"')
-parser.add_argument('-coord2', type=str, default=None, help='coords from sample 2 formatted as "leftcoord:rightcoord"')
+parser.add_argument('-coord1', type=str, default=None, help='coords from sample 1 in format "leftcoord:rightcoord"')
+parser.add_argument('-coord2', type=str, default=None, help='coords from sample 2 in format "leftcoord:rightcoord"')
+parser.add_argument('-radius', type=int, default=1, help='size of neighborhood when expanding the path in the FastDTW method')
 
 args = parser.parse_args()
 
@@ -37,7 +38,7 @@ else:
         S2 = list(Sample2[col][l2:r2])
         
         
-        align = fastdtw(S1, S2)
+        align = fastdtw(S1, S2, radius=args.radius)
 
         el1_al = [S1[i[0]] for i in align[1]]
         el2_al = [S2[i[1]] for i in align[1]]
