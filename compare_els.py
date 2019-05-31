@@ -53,9 +53,11 @@ else:
     mean_shift2 = [np.median([j[i][1] for j in align_shifts]) for i in range(min_shift)]
 
 
+    listSmple1 = {col: list(Sample1[col][l1:r1]) for col in Sample1 if col != '16'}
+    listSmple2 = {col: list(Sample2[col][l2:r2]) for col in Sample2 if col != '16'}
 
-    new_image1 = [[list(Sample1[col][l1:r1])[int(mean_shift1[i])] for i in range(0, len(mean_shift1), 200)] for col in Sample1 if col != '16']
-    new_image2 = [[list(Sample2[col][l2:r2])[int(mean_shift2[i])] for i in range(0, len(mean_shift2), 200)] for col in Sample2 if col != '16']
+    new_image1 = [[listSmple1[col][int(mean_shift1[i])] for i in range(0, len(mean_shift1), 200)] for col in listSmple1]
+    new_image2 = [[listSmple2[col][int(mean_shift2[i])] for i in range(0, len(mean_shift2), 200)] for col in listSmple2]
 
     fig, axs = plt.subplots(3,1,figsize=(30,30))
 
