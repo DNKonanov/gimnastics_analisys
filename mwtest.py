@@ -17,11 +17,8 @@ if None in [args.input1, args.input2]:
 X = np.loadtxt(args.input1)
 Y = np.loadtxt(args.input2)
 
-
-
 mw = mannwhitneyu(X, Y)
 
-print(mw)
 p_value = mw[1]
 print(p_value)
 if p_value > args.pval:
