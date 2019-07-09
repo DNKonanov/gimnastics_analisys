@@ -24,6 +24,6 @@ print(p_value)
 if p_value > args.pval:
     print('reject!')
 else:
-    print('got it!')
+    print('good!')
 
 

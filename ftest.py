@@ -25,6 +25,6 @@ print(p_value)
 if p_value > alpha:
     print('reject!')
 else:
-    print('got it!')
+    print('good!')
 
 
