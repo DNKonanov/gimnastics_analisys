@@ -29,6 +29,7 @@ parser.add_argument('-metric', type=str, default='LINREGRESS', help='metric to c
 parser.add_argument('-conv_val', type=int, default=100, help='convolution parameter')
 parser.add_argument('-radius', type=int, default=10, help='size of neighborhood when expanding the path in the FastDTW method')
 parser.add_argument('-use_distance', type=str, default=0, help='use distance flag (0 or 1, default 0)')
+parser.add_argument('-templateslist', type=str, default=None, help='select only these templates in the extracting in "t1:2:el3" format (default all templates will be used)')
 args = parser.parse_args()
 
 if args.sample == None:
@@ -39,7 +40,7 @@ if args.metric not in METRICS:
     print('Invalid metric!')
     sys.exit()
 
-Templates, Templates_sizes, Templates_coorections = parse_templates(args.templates, conv_val=args.conv_val)
+Templates, Templates_sizes, Templates_coorections =  parse_templates(args.templates, args.templateslist, conv_val=args.conv_val)
 
 Sample = pd.read_csv(args.sample, sep='\t', skiprows=3, header=None, names=[str(i) for i in range(17)], engine='python')
 Sample = np.array(Sample.drop('16',axis=1).values)
@@ -73,15 +74,20 @@ for key in Templates:
 
         if args.use_distance == 0:
             distance = 1
+        
         else:
             distance = distance/len(listSample1)
 
-
         templates_matches[-1].append(compute_distance(listSample1, listTemplate, metric=args.metric, correction=correction, distance=distance))
+        
     templates_matches[-1] = np.array(templates_matches[-1])
     print()
 
 max_match = max([max(t) for t in templates_matches])
+
+print(templates_matches)
+
+print(max_match)
 
 if distance != 1:
     for t in range(len(templates_matches)):
