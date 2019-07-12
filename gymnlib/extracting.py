@@ -49,16 +49,24 @@ def generate_reference(inputs, reference_input, radius, conv=100):
 
 
 
-def parse_templates(templates_folder, conv_val=100):
+def parse_templates(templates_folder, templateslist, conv_val=100):
 
     Templates = []
 
+    if templateslist != None:
+        templateslist = templateslist.split(':')
+
+
+    print(templateslist)
     Templates_corrections = []
     els_templates = os.listdir(templates_folder + '/templates')
 
     
     for template in els_templates:
         
+        if templateslist != None and template not in templateslist:
+            continue
+
         t = np.loadtxt(templates_folder + '/templates/' + template)
         t = np.array([[t[j][i] for i in range(0, len(t[j]), conv_val)] for j in range(len(t))])
         Templates.append(t)
